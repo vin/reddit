@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import re, md5, sys, string
+import re, md5, random, sys, string
 
 """markdown.py: A Markdown-styled-text to HTML converter in Python.
 
@@ -40,7 +40,8 @@ class _Markdown:
     escapechars = '\\`*_{}[]()>#+-.!'
     escapetable = {}
     for char in escapechars:
-        escapetable[char] = md5.new(char).hexdigest()
+        salt = '%f' % random.random()
+        escapetable[char] = md5.new(salt + char).hexdigest()
     
     r_multiline = re.compile("\n{2,}")
     r_stripspace = re.compile(r"^[ \t]+$", re.MULTILINE)
