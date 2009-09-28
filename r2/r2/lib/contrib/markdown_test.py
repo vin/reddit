@@ -7,7 +7,7 @@ class MarkdownEscapingTest(unittest.TestCase):
     def setUp(self):
         self.md = markdown._Markdown()
 
-    def testEscaping(self):
+    def testBasicEscaping(self):
         self.roundtrip("foo")
         self.roundtrip('<a href="foo">bar</a>')
         self.roundtrip('<a<b><c<d>>>>')
@@ -15,6 +15,8 @@ class MarkdownEscapingTest(unittest.TestCase):
         self.roundtrip('[a]')
         self.roundtrip('<')
         self.roundtrip('>?!(*(&')
+
+    def testEscapeTableChars(self):
         for value in self.md.escapetable.values():
             self.roundtrip('<a%s>' % value)
 
